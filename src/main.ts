@@ -13,8 +13,8 @@ const main = async () => {
   if (fs.existsSync(output)) {
     fs.rmSync(output, { recursive: true });
   }
-  fs.mkdirSync(join(output, "2021"), { recursive: true });
-  fs.mkdirSync(join(output, "2022"), { recursive: true });
+  fs.mkdirSync(join(output, "blog", "2021"), { recursive: true });
+  fs.mkdirSync(join(output, "blog", "2022"), { recursive: true });
 
   step("Clone repo");
   const git_url = "https://github.com/ryota2357/ryota2357-github-pages.git";
