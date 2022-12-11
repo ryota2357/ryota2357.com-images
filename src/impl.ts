@@ -54,10 +54,8 @@ const setupCanvas = async ({
 
 const textSize = (context: CanvasRenderingContext2D, text: string) => {
   const measure = context.measureText(text);
-  const width: number = Math.floor(measure.width);
-  const height: number = Math.floor(
-    measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent
-  );
+  const width = measure.width;
+  const height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent;
   return { width, height };
 };
 
