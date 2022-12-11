@@ -1,0 +1,39 @@
+name: Generate OG-Image
+
+on:
+  repository_dispatch:
+     types: [gen-og-image]
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+      - run: npm run type-check
+      - run: npm run format
+      - run: npm run build
+      - run: npm run start
+
+      - name: Push to og-image branch
+        uses: s0/git-publish-subdir-action@master
+        env:
+          REPO: self
+          BRANCH: og-image
+          FOLDER: output
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
