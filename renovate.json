@@ -1,6 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
+  "extends": ["config:base"],
+  "rangeStrategy": "pin",
+  "timezone": "Asia/Tokyo",
+  "schedule": "at any time",
+  "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "groupName": "pin",
+      "matchUpdateTypes": ["pin"],
+      "automerge": true,
+      "ignoreTests": true
+    },
+    {
+      "groupName": "packages",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": false
+    }
   ]
 }
