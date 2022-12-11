@@ -23,22 +23,27 @@ const main = async () => {
 
   step("Collect data");
   const data: { slug: string; title: string }[] = [];
-  for (const year of ["2021", "2022"]) {
-    const targetDir = resolve(join(repo, "content", "post", year));
-    for (const entry of fs.readdirSync(targetDir)) {
-      const path = join(targetDir, entry, "index.md");
-      if (fs.existsSync(path)) {
-        data.push({
-          slug: join(year, entry),
-          title: (() => {
-            const titleLine = fs
-              .readFileSync(path, { encoding: "utf-8" })
-              .split("\n")[1];
-            return /"(.*)"/.exec(titleLine)?.[1]?.toString() ?? "No title";
-          })(),
-        });
+  {
+    // collect blog-post
+    for (const year of ["2021", "2022"]) {
+      const targetDir = resolve(join(repo, "content", "post", year));
+      for (const entry of fs.readdirSync(targetDir)) {
+        const path = join(targetDir, entry, "index.md");
+        if (fs.existsSync(path)) {
+          data.push({
+            slug: join("blog", year, entry),
+            title: (() => {
+              const titleLine = fs
+                .readFileSync(path, { encoding: "utf-8" })
+                .split("\n")[1];
+              return /"(.*)"/.exec(titleLine)?.[1]?.toString() ?? "No title";
+            })(),
+          });
+        }
       }
     }
+
+    // TODO: 他のところからも抽出して生成する
   }
 
   step("Generate image");
