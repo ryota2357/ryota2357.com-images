@@ -4,12 +4,13 @@ import {
   loadImage,
   registerFont,
 } from "canvas";
-import { readFileSync } from "fs";
+import * as fs from "fs";
+import { parse as parsePath } from "path";
 
 type Px = number;
 type Em = number;
 
-type Params = {
+export type Params = {
   image: {
     path: string;
     width: Px;
@@ -42,7 +43,7 @@ const setupCanvas = async ({
   image: Params["image"];
 }) => {
   registerFont(font.path, { family: font.family });
-  const img = await loadImage(readFileSync(image.path));
+  const img = await loadImage(fs.readFileSync(image.path));
   const canvas = createCanvas(image.width, image.height);
   const context = canvas.getContext("2d");
   context.drawImage(img, 0, 0, image.width, image.height);
@@ -55,7 +56,8 @@ const setupCanvas = async ({
 const textSize = (context: CanvasRenderingContext2D, text: string) => {
   const measure = context.measureText(text);
   const width = measure.width;
-  const height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent;
+  const height =
+    measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent;
   return { width, height };
 };
 
@@ -153,4 +155,24 @@ export const generateImage = async (params: Params) => {
   });
 
   return canvas.toBuffer("image/png");
+};
+
+export const writeFileSafe = (
+  path: string,
+  data: string | NodeJS.ArrayBufferView,
+  callback: fs.NoParamCallback
+) => {
+  const dir = parsePath(path).dir;
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  fs.writeFile(path, data, callback);
+};
+
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends Array<infer U>
+    ? Array<DeepPartial<U>>
+    : T[P] extends ReadonlyArray<infer UU>
+    ? ReadonlyArray<DeepPartial<UU>>
+    : DeepPartial<T[P]>;
 };
