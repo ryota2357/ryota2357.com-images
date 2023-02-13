@@ -57,7 +57,7 @@ const main = async () => {
   const data: { slug: string; params: Params }[] = [];
   {
     // blog-post
-    for (const year of ["2021", "2022"]) {
+    for (const year of ["2021", "2022", "2023"]) {
       const targetDir = resolve(join(repo, "content", "post", year));
       for (const entry of fs.readdirSync(targetDir)) {
         const path = join(targetDir, entry, "index.md");
