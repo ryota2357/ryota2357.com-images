@@ -123,7 +123,7 @@ const writeText = ({
     text: text,
   });
 
-  let x = style.padding.left + maxWidth / 2;
+  const x = style.padding.left + maxWidth / 2;
   let y = (() => {
     const area = height - (style.padding.top + style.padding.bottom);
     const use = lines.length * textHight;

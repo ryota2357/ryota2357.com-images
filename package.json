@@ -9,8 +9,11 @@
     "clean": "rimraf dist/*",
     "tsc": "tsc",
     "start": "node .",
-    "type-check": "tsc --noEmit",
-    "format": "prettier --write '**/*.ts'"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --fix '**/*.ts'",
+    "lint:check": "eslint '**/*.ts'",
+    "format": "prettier --write '**/*.ts'",
+    "format:check": "prettier --check '**/*.ts'"
   },
   "author": "ryota2357",
   "license": "MIT",
@@ -22,6 +25,9 @@
   "devDependencies": {
     "@types/node": "20.1.2",
     "@types/walk": "2.3.1",
+    "@typescript-eslint/eslint-plugin": "5.59.5",
+    "@typescript-eslint/parser": "5.59.5",
+    "eslint": "^8.40.0",
     "npm-run-all": "4.1.5",
     "prettier": "2.8.8",
     "rimraf": "5.0.0",
