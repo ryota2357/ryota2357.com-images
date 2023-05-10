@@ -49,7 +49,7 @@ const main = async () => {
   }
 
   step("Clone repo");
-  const git_url = "https://github.com/ryota2357/ryota2357-github-pages.git";
+  const git_url = "https://github.com/ryota2357/ryota2357.com.git";
   const repo = resolve("./repo");
   await simpleGit().clone(git_url, repo, { "--depth": "1" });
 
