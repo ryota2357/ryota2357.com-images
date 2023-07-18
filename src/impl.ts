@@ -160,7 +160,7 @@ export const generateImage = async (params: Params) => {
 export const writeFileSafe = (
   path: string,
   data: string | NodeJS.ArrayBufferView,
-  callback: fs.NoParamCallback
+  callback: fs.NoParamCallback,
 ) => {
   const dir = parsePath(path).dir;
   if (!fs.existsSync(dir)) {
