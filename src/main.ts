@@ -120,4 +120,5 @@ const main = async () => {
   fs.rmSync(repo, { recursive: true });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 main();
